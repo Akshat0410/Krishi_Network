@@ -1,24 +1,19 @@
 package com.example.krishi_task_1
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayerView
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var youTubePlayer:YouTubePlayerView
-    private lateinit var mOnInitializerListener: YouTubePlayer.OnInitializedListener
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        initYoutubePlayer()
-    }
-
-    private fun initYoutubePlayer() {
-        youTubePlayer=findViewById(R.id.youtubePlayerView)
-        mOnInitializerListener
+        val button=findViewById<Button>(R.id.screen1)
+        button.setOnClickListener {
+            val i= Intent(this,YoutubePlayerActivity::class.java)
+            startActivity(i)
+            finish()
+        }
     }
 }
