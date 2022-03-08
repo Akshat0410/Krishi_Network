@@ -19,44 +19,27 @@ class YoutubePlayerActivity : YouTubeBaseActivity() {
     private lateinit var youTubePlayer: YouTubePlayerView
     private lateinit var play: Button
     private lateinit var youtubePlayerInIt: YouTubePlayer.OnInitializedListener
-    private lateinit var youtube: YouTubePlayer
-    private var currentTime: Int = 0
-    private lateinit var mPrefs : SharedPreferences
-    private var MY_PREF_NAME="MY APP"
+    private lateinit var youtubePlayer: YouTubePlayer
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_youtube_player)
-        initYoutubePlayer()
+
+        youTubePlayer = findViewById(R.id.youtubePlayerView)
+        play = findViewById(R.id.playVideo)
+
         initializePlayer()
 
-        findViewById<Button>(R.id.button).setOnClickListener {
-            startActivity(Intent(this, UserDetailActivity::class.java))
-            finish()
+        play.setOnClickListener {
+
+            youtubePlayer.loadVideo(getVideoId())
+
         }
 
     }
 
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        outState.putInt("time", currentTime)
-        super.onSaveInstanceState(outState, outPersistentState)
-
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        currentTime = savedInstanceState.getInt("time")
-        Log.e("current_time", currentTime.toString())
-    }
-
     private fun initializePlayer() {
-        youTubePlayer.initialize(YoutubeConfig.GOOGLE_API_KEY, youtubePlayerInIt)
-    }
-
-    private fun initYoutubePlayer() {
-
-        youTubePlayer = findViewById(R.id.youtubePlayerView)
-        play = findViewById(R.id.playVideo)
 
         youtubePlayerInIt = object : YouTubePlayer.OnInitializedListener {
             override fun onInitializationSuccess(
@@ -64,11 +47,11 @@ class YoutubePlayerActivity : YouTubeBaseActivity() {
                 p1: YouTubePlayer?,
                 p2: Boolean
             ) {
-                p1?.loadVideo(getVideoId())
-
-                p1?.setOnFullscreenListener {
-                    currentTime = p1.currentTimeMillis
+                if (p1 != null) {
+                    youtubePlayer = p1
                 }
+                p1?.cueVideo(getVideoId())
+
             }
 
             override fun onInitializationFailure(
@@ -81,10 +64,9 @@ class YoutubePlayerActivity : YouTubeBaseActivity() {
 
         }
 
+        youTubePlayer.initialize(YoutubeConfig.GOOGLE_API_KEY, youtubePlayerInIt)
 
-        play.setOnClickListener {
-            youTubePlayer.initialize(YoutubeConfig.GOOGLE_API_KEY, youtubePlayerInIt)
-        }
+
     }
 
     private fun getVideoId(): String {

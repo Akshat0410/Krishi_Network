@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Krishi_Task_1</string>
     <string name="play">Play</string>
+    <string name="user">User</string>
+    <string name="youtube_player">Youtube Player</string>
+    <string name="user_profile">User Profile</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
 </resources>

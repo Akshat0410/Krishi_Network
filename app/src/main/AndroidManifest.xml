@@ -18,10 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Krishi_Task_1">
         <activity
+            android:name=".Activity.DashBoardActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.UserDetailActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.YoutubePlayerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Activity.MainActivity"

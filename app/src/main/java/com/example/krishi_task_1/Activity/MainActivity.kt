@@ -38,16 +38,13 @@ class MainActivity : AppCompatActivity() {
         initializeUI()
 
         if(getUser()){
-            val intent=Intent(this, YoutubePlayerActivity::class.java)
-            startActivity(intent)
-            finish()
+           navigateUser()
         }
 
         val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 bp=data?.extras?.get("data") as Bitmap
-                Toast.makeText(this,bp.toString(),Toast.LENGTH_SHORT).show()
                 profileImage.setImageBitmap(bp)
 
             }
@@ -65,6 +62,9 @@ class MainActivity : AppCompatActivity() {
             if(name.isNotEmpty() && isValidEmail(email)){
                 val user= User(true,name,email,ImageUtil.convertToString(bp)!!)
                 saveUser(user)
+                val intent=Intent(this, DashBoardActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
 
@@ -86,6 +86,12 @@ class MainActivity : AppCompatActivity() {
         val user : User = gson.fromJson(json, User::class.java)
 
         return user.doesExist
+    }
+
+    private fun navigateUser(){
+        val intent=Intent(this,DashBoardActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun isValidEmail(email: String): Boolean {

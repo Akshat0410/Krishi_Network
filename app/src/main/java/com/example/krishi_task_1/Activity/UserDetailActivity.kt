@@ -35,6 +35,7 @@ class UserDetailActivity : AppCompatActivity() {
         userName.text=user.name
         userEmail.text=user.email
 
+
     }
 
     private fun initializeViews() {
